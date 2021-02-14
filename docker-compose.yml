@@ -1,0 +1,61 @@
+version: '3'
+services:
+  db:
+    image: postgres:11
+    volumes:
+      - ./tmp/db/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+  redis:
+    image: redis
+    volumes:
+      - ./tmp/db/redis:/var/lib/redis/data
+
+  webpacker:
+    build: .
+    command: './bin/webpack-dev-server'
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=postgres
+      - HAML_RAILS_DELETE_ERB=true
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - .:/pickemup
+    ports:
+      - "3035:3035"
+    depends_on:
+      - db
+      - redis
+
+  app:
+    stdin_open: true
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=postgres
+      - HAML_RAILS_DELETE_ERB=true
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - .:/pickemup
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - webpacker
+      - redis
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/swagger/swagger.yaml
+    volumes:
+      - ./swagger:/swagger/
+    ports:
+      - 8080:8080
+
+  # swagger-editor:
+  #   image: swaggerapi/swagger-editor
+  #   ports:
+  #     - 808:8080

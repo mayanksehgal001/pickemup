@@ -1,0 +1,96 @@
+//global template json
+{
+  name: '',
+  sections: {
+
+    #{version}-handle-of-section_#{integer_number}: {
+      //value from section schema,
+      "type": "instagram",
+      "settings": {
+        "colors": "white",
+        "title": "Instagram",
+        "show-title": true,
+        "image-padding": false,
+        "show_instagram_button": false,
+        "instagram-access-token": "",
+        "instagram-homepage-width": "full-width",
+        "grid": 6,
+        "rows": 1,
+        "sort-by": "none"
+      } 
+    },
+  }
+
+  content_for_template: [
+    '#{version}-handle-of-section_1',
+    '#{version}-handle-of-section_2',
+  ],
+}
+
+// funnel template json
+{
+  name: '',
+  sections: {
+
+    #{version}-handle-of-section_#{integer_number}: { 
+      //value from section schema,
+      "type": "instagram",
+      "settings": {
+        "colors": "white",
+        "title": "Instagram",
+        "show-title": true,
+        "image-padding": false,
+        "show_instagram_button": false,
+        "instagram-access-token": "",
+        "instagram-homepage-width": "full-width",
+        "grid": 6,
+        "rows": 1,
+        "sort-by": "none"
+      } 
+    },
+  }
+
+  content_for_template: [
+    '#{version}-handle-of-section_1',
+    '#{version}-handle-of-section_2',
+  ],
+}
+
+
+// Global Directory
+sections-dirc/
+  lead/
+    lead-handle1.liquid
+  sales/
+    sales-handle1.liquid
+template-dirc/
+  lead/
+    template-handle1.json
+  sales/
+    template-handle12.json
+  info/
+  checkout/
+
+
+// Accounts_directory
+account-slug1/
+account-slug2/
+  custom_sections/
+    custom-section1.liquid
+  pickemups/
+
+    pickemup-slug1/
+      funnel-slug1/
+        templates/
+          template-handle1.json
+          template-handle12.json
+        sections/
+          v1-sales-section.liquid
+          v2-sales-section.liquid
+          custom-section/ --- symlink (show only files poc)
+        settings_data.json
+
+      funnel-slug2/
+        templates/
+        sections/
+        settings_data.json
